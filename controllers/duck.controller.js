@@ -1,10 +1,10 @@
 const express = require('express');
 const duckRouter = express.Router();
 
-const {sanitizeStrings} = require('../middlewares/middlewares');
+const {sanitizePathParams} = require('../middlewares/middlewares');
 const duckService = require('../services/duck.service');
 
-duckRouter.get('/:query', sanitizeStrings, async (req, res, next) => {
+duckRouter.get('/:query', sanitizePathParams, async (req, res, next) => {
     try {
         const results = await duckService.getDuckRequest(req.params.query);
         res.send(results);
