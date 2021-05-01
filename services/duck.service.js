@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { getDuckBaseUrl } = require('../constants/urls.json');
-const { NO_DATA_FOUND } = require('../constants/error-codes.json');
+const { UNKNOWN_ERROR } = require('../constants/error-codes.json');
 
 const relatedTopicsToFlatArr = relatedTopicsArr => {
     return relatedTopicsArr.reduce((accum, result) => {
@@ -30,12 +30,12 @@ const getDuckData = async q => (await axios.get(getDuckBaseUrl, {
 
 module.exports.getDuckRequest = async q => {
     const res = await getDuckData(q)
-    if (res.RelatedTopics && res.RelatedTopics.length > 0) {
+    // if for sme reason there are no RelatedTopics, let client know something went wrong
+    if (res.RelatedTopics) {
         return relatedTopicsToFlatArr(res.RelatedTopics);
     } else {
         throw {
-            name: NO_DATA_FOUND,
-            message: 'No Data Found'
+            name: UNKNOWN_ERROR
         };
     }
 }
