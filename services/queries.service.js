@@ -1,5 +1,4 @@
 const fs = require('fs').promises;
-const util = require('util');
 
 const queriesFilePath = './assets/queries.json';
 
